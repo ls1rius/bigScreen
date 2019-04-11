@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html style="height: 100%;background-color: #12203a;">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="echarts.js"></script>
+       <script type="text/javascript" src="theme.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom,'shine');
+var app = {};
+option = null;
+option = {
+    title: {
+        // text: '基础雷达图'
+    },
+    tooltip: {},
+    legend: {
+        // data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）']
+    },
+    radar: {
+        // shape: 'circle',
+        name: {
+            textStyle: {
+                color: '#fff',
+                backgroundColor: 'transparent',
+                borderRadius: 3,
+                padding: [3, 5]
+           }
+        },
+        indicator: [
+           { name: '天气', max: 100},
+           { name: '温度', max: 40},
+           { name: '湿度', max: 100},
+           { name: '能见度', max: 100},
+           { name: '风力', max: 10},
+           { name: '拥堵指数', max: 100}
+        ]
+    },
+    series: [{
+        name: '预测 vs 实际',
+        type: 'radar',
+        // areaStyle: {normal: {}},
+        data : [
+            {
+                value : [80, 36, 95, 80, 2, 10],
+                // name : '预算分配（Allocated Budget）'
+            },
+             {
+                value : [80, 36, 90, 85, 3, 5],
+                // name : '实际开销（Actual Spending）'
+            }
+        ]
+    }]
+};;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>

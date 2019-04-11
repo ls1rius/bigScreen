@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>demo</title>
+  <link rel="stylesheet" type="text/css" href="index.css">
+  <!-- <link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_648770_4vcwyi8z4pxh6w29.css"> -->
+
+<link rel="stylesheet" href="lib/DrawingManager.min.css" />
+</head>
+<body>
+	<div id="mainContain">
+		<div class="leftPart">
+			<div class="weatherBox">
+				<div class="dayTimeBox">
+					<div class="dayInfo">
+						<span>{{curDay}}</span>
+						<span>{{curWeek}}</span>
+					</div>
+					<span class="curTime">{{curTime}}</span>
+				</div>
+				<div class="weatherShowBox">
+					<div class="imageContain">
+						<img v-bind:src="weatherImage">
+					</div>
+					<span>25 ~ 16℃ 南风微风</span>
+				</div>
+			</div>
+			<div class="distinctBox">
+				<div class="distinctItemBox" 
+				v-on:click="changeTheDistrict('全市')">
+					全市
+				</div>
+				<div class="distinctItemBox" 
+				v-for="distinctItem in distinctData"
+				v-on:click="changeTheDistrict(distinctItem.distinctItem)">
+					{{distinctItem.distinctItem}}
+				</div>
+			</div>
+			<div class="space"></div>
+			<div class="accidentRankBox gradientBorder">
+				<div class="metalBorderBox">
+					<div class="insideBox">
+						<div class="left"></div>
+						<span>车辆车祸概率排行</span>
+						<div class="right"></div>
+					</div>
+					<div class="insideBox">
+						<div class="left"></div>
+						<div class="right"></div>
+					</div>
+				</div>
+				<div class="outSideContain">
+					<div class="curDistincts">
+						<span class="beauty-scroll">
+							全市
+						</span>
+					</div>
+					<div class="accidentRankContain beauty-scroll">
+						<div class="accidentItemBox" 
+						v-for="(accidentItem,index) in accidentRankData"
+						v-on:click="checkTheDriverInfo(accidentItem.carId,accidentItem.curRoad)">
+							<div style="width: 15%;display: flex;">
+								<span class="rankOrder">{{index + 1}}</span>
+								<span class="tri">
+									<div></div>
+								</span>
+							</div>
+							<span class="name">{{accidentItem.name}}</span>
+							<span class="carId">{{accidentItem.carId}}</span>
+							<span class="curRoad">{{accidentItem.curRoad}}</span>
+							<span class="rate">{{accidentItem.rate}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="space"></div>
+			<div class="rateAnalyse gradientBorder">
+				<div class="metalBorderBox">
+					<div class="insideBox">
+						<div class="left"></div>
+						<span>车辆车祸概率分析</span>
+						<div class="right"></div>
+					</div>
+					<div class="insideBox">
+						<div class="left"></div>
+						<div class="right"></div>
+					</div>
+				</div>
+				<div class="outSideContain">
+					<div class="rateAnalyseContain">
+						<div id="gauge_speed">
+							
+						</div>
+						<div id="gauge_probability">
+							
+						</div>
+						<div class="rateAnalyseBottomBox">
+							<div class="roadInfo">
+								<div class="nameInfo">
+									<span>
+										<img src="images/greenPoint.png">
+										<p style="margin-left: 5px;">路段名</p>
+									</span>
+									<p style="width: 15%;">：</p>
+									<p style="width: 35%;"
+									class="roadName">紫金港路</p>
+								</div>
+								<div class="suggestionInfo">
+									<span>
+										<img src="images/bluePoint.png">
+										<p style="margin-left: 5px;">公路设施</p>
+									</span>
+									<p style="width: 15%;">：</p>
+									<p style="width: 35%;">完备</p>
+								</div>
+							</div>
+							<div class="carInfo">
+								<div class="nameInfo">
+									<span>
+										<img src="images/greenPoint.png">
+										<p style="margin-left: 5px;">车牌号</p>
+									</span>
+									<p style="width: 15%;">：</p>
+									<p style="width: 35%;"
+									class="radarCarId">浙A37891</p>
+								</div>
+								<div class="suggestionInfo">
+									<span>
+										<img src="images/bluePoint.png">
+										<p style="margin-left: 5px;">湿滑度</p>
+									</span>
+									<p style="width: 15%;">：</p>
+									<p style="width: 35%;">较滑</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="centerPart">
+			<div class="routeTraceScreen gradientBorder">
+				<div class="metalBorderBox">
+					<div class="insideBox">
+						<div class="left"></div>
+						<div class="centerLogoPart">
+							<img src="images/u296.png">
+							<span>FORECAR车祸预测系统</span>
+						</div>
+						<div class="right"></div>
+					</div>
+					<div class="insideBox">
+						<div class="left"></div>
+						<div class="right"></div>
+					</div>
+				</div>
+				<div class="outSideContain">
+					<div id="centerMapBox">
+						
+					</div>
+					<div id="changeTrafficAndAccident">
+						<span class="accidentBtn">事故概率图</span>
+						<span class="trafficBtn">交通拥堵图</span>
+					</div>
+					<div id="changeTheDayAndNight">
+						<span>夜间模式</span>
+					</div>
+					<!-- <div class="redPoint"></div> -->
+					<!-- <iframe scrolling="auto" width=100% height=100% frameborder="0" src="outlink/lines-bmap-effect.html"></iframe> -->
+				</div>
+			</div>
+			<div class="space"></div>
+			<div class="accidentRecords gradientBorder">
+				<div class="metalBorderBox">
+					<div class="insideBox">
+						<div class="left"></div>
+						<span>事故记录</span>
+						<div class="right"></div>
+					</div>
+					<div class="insideBox">
+						<div class="left"></div>
+						<div class="right"></div>
+					</div>
+				</div>
+				<div class="outSideContain">
+					<div class="radarBox">
+						<div  class="radarInfo">
+							<span style="color: #fff;font-size: 16px;
+							font-weight: bold;margin-bottom: 10px;">浙A37891实际情况</span>
+							<div class="radarInfoItem" v-for="radarInfoItem in radarInfoData">
+								<span>
+									<img v-bind:src="radarInfoItem.itemImage">
+									<p style="margin-left: 5px;">{{radarInfoItem.itemName}}</p>
+								</span>
+								<p>{{radarInfoItem.itemInfo}}</p>
+							</div>
+						</div>
+						<div class="radarContain" id="radarGraphContain">
+							<!-- <iframe scrolling="auto" width=100% height=100% frameborder="0" src="outlink/radar_first.html"></iframe> -->
+						</div>
+					</div>
+					<div class="recordsShowBox">
+						<div class="searchRecordsBox">
+							<div style="width: 60%;height: 100%;"></div>
+							<div class="searchContain">
+								<input type="text" name="" placeholder="输入姓名或路段名">
+								<span>
+									<img src="images/search.png"
+									v-on:click="searchAction()">
+								</span>
+								
+							</div>
+						</div>
+						<table>
+							 <thead>
+								<tr>
+								  <th>序号</th>
+								  <th>姓名</th>
+								  <th>车牌号</th>
+								  <th>路段</th>
+								  <th>类别</th>
+								  <th>时间</th>
+								</tr>
+							</thead>
+							<tbody class="beauty-scroll">
+								<tr v-if="remindNothing"
+								style="width: 100%;height: 100%;">
+									<td style="width: 100%;height: 100%;">
+										<span>搜不到任何东西~</span>
+									</td>
+								</tr>
+								<tr v-for="(recordItem,index) in recordsData">
+
+									<td>{{index+1}}</td>
+									<td>{{recordItem.name}}</td>
+									<td>{{recordItem.carId}}</td>
+									<td>{{recordItem.road}}</td>
+									<td>{{recordItem.type}}</td>
+									<td>{{recordItem.time}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="rightPart">
+			<div class="averageRate gradientBorder">
+				<div class="metalBorderBox">
+					<div class="insideBox">
+						<div class="left"></div>
+						<span>全市车祸平均概率统计(‰)</span>
+						<div class="right"></div>
+					</div>
+					<div class="insideBox">
+						<div class="left"></div>
+						<div class="right"></div>
+					</div>
+				</div>
+				<div class="outSideContain">
+					<!-- <iframe scrolling="auto" width=100% height=100% frameborder="0" src="outlink/pictorialBar-dotted.html"></iframe> -->
+					<div id="averageGraph">
+						
+					</div>
+				</div>
+			</div>
+			<div class="space"></div>
+			<div class="tfhoursAlarm gradientBorder">
+				<div class="metalBorderBox">
+					<div class="insideBox">
+						<div class="left"></div>
+						<span>重要路段24小时告警统计</span>
+						<div class="right"></div>
+					</div>
+					<div class="insideBox">
+						<div class="left"></div>
+						<div class="right"></div>
+					</div>
+				</div>
+				<div class="outSideContain">
+					<div class="tfhoursAlarmContain">
+						<!-- <iframe scrolling="auto" width=100% height=100% frameborder="0" src="outlink/pie-doughnut.html"></iframe> -->
+						<div id="pieGraph">
+							
+						</div>
+					</div>
+					<div class="tfhoursAlarmWordsShow">
+						<marquee direction=up behavior="scroll" scrolldelay="200" onmouseover="stop()"onmouseout="start()" class="marqueeForWords">
+							<span v-for="(tfhoursItem,index) in tfhoursAlarmData">
+								<b>{{index+1}}.</b>
+								{{tfhoursItem.time}}
+								<u style="width: 100%;">{{tfhoursItem.road}}</u>
+								{{tfhoursItem.event}}
+							</span>
+						</marquee>
+					</div>
+				</div>
+			</div>
+			<div class="space"></div>
+			<div class="rateTends gradientBorder">
+				<div class="metalBorderBox">
+					<div class="insideBox">
+						<div class="left"></div>
+						<span>重要路段24小时车祸概率走势(‰)</span>
+						<div class="right"></div>
+					</div>
+					<div class="insideBox">
+						<div class="left"></div>
+						<div class="right"></div>
+					</div>
+				</div>
+				<div class="outSideContain">
+					<div id="multipleX">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=l1EqtLsH9DFFZ9mkW4er29NURLMw6gUK"></script>
+<script type="text/javascript" src="lib/vue.js"></script>
+<script type="text/javascript" src="lib/jquery.min.js"></script>
+<script type="text/javascript" src="lib/DrawingManager.min.js"></script>
+<script type="text/javascript" src="index.js" ></script>
+<script type="text/javascript" src="lib/echarts.js"></script>
+<script type="text/javascript" src="lib/theme.js"></script>
+
+<script type="text/javascript">
+var radarDom = document.getElementById("radarGraphContain");
+var radarChart = echarts.init(radarDom,'shine');
+var app = {};
+radarOption = null;
+radarOption = {
+    title: {
+        // text: '基础雷达图'
+    },
+    color:["#c12e34",
+            "#e6b600",
+            "#0098d9",
+            "#2b821d",
+            "#005eaa",
+            "#339ca8",
+            "#cda819",
+            "#32a487"],
+    tooltip: {},
+    legend: {
+        data: ['预测情况    ', '实际情况']
+    },
+    radar: {
+        // shape: 'circle',
+        name: {
+            textStyle: {
+                color: '#fff',
+                backgroundColor: 'transparent',
+                borderRadius: 3,
+                padding: [3, 5]
+           }
+        },
+        indicator: [
+           { name: '驾龄', max: 100},
+           { name: '疲劳指数', max: 100},
+           { name: '情绪', max: 100},
+           { name: '注意力', max: 100},
+           { name: '控制力', max: 100},
+           { name: '警惕性', max: 100}
+        ]
+    },
+    series: [{
+        // name: '红色为预测 vs 黄色为实际',
+        type: 'radar',
+        // areaStyle: {normal: {}},
+        data : [
+            {
+                value : [20, 75, 83, 90, 78, 65],
+                name : '预测情况    '
+            },
+             {
+                value : [20, 82, 86, 75, 80, 69],
+                name : '实际情况'
+            }
+        ]
+    }]
+};;
+if (radarOption && typeof radarOption === "object") {
+    radarChart.setOption(radarOption, true);
+}
+       </script>
+       <script type="text/javascript">
+var speedDom = document.getElementById("gauge_speed");
+var speedChart = echarts.init(speedDom,'shine');
+var app = {};
+speedOption = null;
+speedOption = {
+    tooltip : {
+        // formatter: "{a} <br/>{b} : {c}‰"
+    },
+    toolbox: {
+        feature: {
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    series: [
+        {
+            name: '当前速度',
+            type: 'gauge',
+            min : 0,
+            max : 120,
+            detail: {
+              formatter:'{value}',
+              fontSize:14
+            },
+            data: [{value: 5, name: ''}],
+            axisLabel: {            // 坐标轴小标记  
+               textStyle: {       // 属性lineStyle控制线条样式  
+                   fontWeight: 'bolder',  
+                   fontSize : 10,  
+                   color: '#fff'  
+               }  
+           },
+        },
+    ],
+    detail: {
+       formatter : "{score|{value}‰}",
+       offsetCenter: [0, "40"],
+       backgroundColor: '#FFEC45',
+       height:30,
+       rich : {
+           score : {
+               color : "white",
+               fontFamily : "微软雅黑",
+               fontSize : 16
+           }
+       },
+       textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+            fontWeight: 'bolder',
+            color: '#fff',
+            fontSize: 12
+        }
+   },
+   data: [{
+       value: 18,
+       label: {
+           textStyle: {
+               fontSize: 12
+           }
+       }
+   }]
+};
+
+
+setInterval(function () {
+    speedOption.series[0].data[0].value = (Math.random()*60+60).toFixed(2) - 0;
+    speedChart.setOption(speedOption, true);
+},2000);
+;
+if (speedOption && typeof speedOption === "object") {
+    speedChart.setOption(speedOption, true);
+}
+       </script>
+       <script type="text/javascript">
+var probabilityDom = document.getElementById("gauge_probability");
+var probabilityChart = echarts.init(probabilityDom,'shine');
+var app = {};
+probabilityOption = null;
+probabilityOption = {
+    tooltip : {
+        // formatter: "{a} <br/>{b} : {c}‰"
+    },
+    toolbox: {
+        feature: {
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    series: [
+        {
+            name: '当前车祸概率',
+            type: 'gauge',
+            min : 0,
+            max : 10,
+            detail: {
+              formatter:'{value}‰',
+              fontSize:14
+            },
+            data: [{value: 5, name: ''}],
+            axisLabel: {            // 坐标轴小标记  
+               textStyle: {       // 属性lineStyle控制线条样式  
+                   fontWeight: 'bolder',  
+                   fontSize : 12,  
+                   color: '#fff'  
+               }  
+           },
+        },
+    ],
+    detail: {
+       formatter : "{score|{value}‰}",
+       offsetCenter: [0, "40‰"],
+       backgroundColor: '#FFEC45',
+       height:30,
+       rich : {
+           score : {
+               color : "white",
+               fontFamily : "微软雅黑",
+               fontSize : 16
+           }
+       },
+       textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+            fontWeight: 'bolder',
+            color: '#fff',
+            fontSize: 10
+        }
+   },
+   data: [{
+       value: 18,
+       label: {
+           textStyle: {
+               fontSize: 12
+           }
+       }
+   }]
+};
+
+
+setInterval(function () {
+    probabilityOption.series[0].data[0].value = (Math.random()*10).toFixed(2) - 0;
+    probabilityChart.setOption(probabilityOption, true);
+},2000);
+;
+if (probabilityOption && typeof probabilityOption === "object") {
+    probabilityChart.setOption(probabilityOption, true);
+}
+       </script>
+
+      <script type="text/javascript">
+var multipleDom = document.getElementById("multipleX");
+var multipleChart = echarts.init(multipleDom,'shine');
+var app = {};
+multipleOption = null;
+app.title = '';
+
+
+multipleOption = {
+    tooltip: {
+        trigger: 'none',
+        axisPointer: {
+            type: 'cross'
+        }
+    },
+    color:["#c12e34",
+        "#e6b600",
+        "#0098d9",
+        "#2b821d",
+        "#005eaa",
+        "#339ca8",
+        "#cda819",
+        "#32a487"],
+    legend: {
+        data:['余杭塘路','凤起路','秋涛路','环城东路','建国路','中河路'],
+        textStyle: {       // 属性lineStyle控制线条样式  
+           fontWeight: 'bolder',  
+           fontSize : 14,  
+           color: '#fff'  
+       }
+    },
+    grid: {
+        top: 70,
+        bottom: 50
+    },
+    xAxis: [
+        {
+            type: 'category',
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine: {
+                onZero: false,
+                lineStyle: {
+                    color: 'gray'
+                }
+            },
+            axisLabel: {            // 坐标轴小标记  
+               textStyle: {       // 属性lineStyle控制线条样式  
+                   fontWeight: 'bolder',  
+                   fontSize : 14,  
+                   color: '#fff'  
+               }  
+            },
+            data: ["00:00", "04:00", "8:00", "12:00", "16:00", "20:00"]
+        },
+        {
+            type: 'category',
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine: {
+                onZero: false,
+                lineStyle: {
+                    color: 'gray'
+                }
+            },
+            axisLabel: {            // 坐标轴小标记  
+               textStyle: {       // 属性lineStyle控制线条样式  
+                   fontWeight: 'bolder',  
+                   fontSize : 14,  
+                   color: '#fff'  
+               }  
+            },
+            data: ["00:00", "04:00", "8:00", "12:00", "16:00", "20:00"]
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            
+            // y轴的颜色和宽度
+            axisLine:{
+                lineStyle:{
+                    color:'gray'
+                }
+            },
+            // y轴的字体样式
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: '#fff'
+                }
+            }
+        }
+    ],
+    series: [
+        {
+            name:'余杭塘路',
+            type:'line',
+            xAxisIndex: 1,
+            smooth: true,
+            data:[9.9, 3.2, 1.3, 3.3, 0.9, 1.9]
+        },
+        {
+            name:'凤起路',
+            type:'line',
+            smooth: true,
+            data:[5.6, 4.2, 4.4, 3.1, 4.8, 6.6]
+        },
+        {
+            name:'秋涛路',
+            type:'line',
+            smooth: true,
+            data:[3.0, 4.5, 1.0, 1.2, 4.9, 6.5]
+        }
+        ,
+        {
+            name:'环城东路',
+            type:'line',
+            smooth: true,
+            data:[6.7, 7.8, 5.4, 4.6, 8.8, 7.5]
+        }
+        ,
+        {
+            name:'建国路',
+            type:'line',
+            smooth: true,
+            data:[1.2, 2.3, 3.2, 1.2, 4.5, 8.0]
+        }
+        ,
+        {
+            name:'中河路',
+            type:'line',
+            smooth: true,
+            data:[7.8, 0.2, 4.5, 4.0, 1.3, 5.2]
+        }
+    ]
+};
+
+if (multipleOption && typeof multipleOption === "object") {
+    multipleChart.setOption(multipleOption, true);
+}
+
+       </script>
+       <script type="text/javascript">
+var pieDom = document.getElementById("pieGraph");
+//加载样式
+var pieChart = echarts.init(pieDom,'shine');
+var app = {};
+pieOption = null;
+app.title = '';
+
+pieOption = {
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        x: 'left',
+        data:['危险','一般','安全']
+    },
+    series: [
+        {
+            name:'访问来源',
+            type:'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '20',
+                        fontWeight: 'bold',
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data:[
+                {value:9, name:'危险'},
+                {value:15, name:'一般'},
+                {value:27, name:'安全'}
+            ]
+        }
+    ]
+};
+;
+if (pieOption && typeof pieOption === "object") {
+    pieChart.setOption(pieOption, true);
+}
+       </script>
+       
+       <script type="text/javascript">
+var averageDom = document.getElementById("averageGraph");
+var averageChart = echarts.init(averageDom,'shine');
+var app = {};
+averageOption = null;
+// Generate data
+var category = [];
+var dottedBase = +new Date();
+var lineData = [];
+var barData = [];
+
+for (var i = 0; i < 9; i++) {
+    var date = new Date(dottedBase += 3600 * 24 * 1000);
+    category.push([
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate()
+    ].join('-'));
+    var b = Math.random()*10;
+    var d = Math.random()*1;
+    barData.push(b)
+    lineData.push(d + b);
+}
+// category = ['余杭塘路','凤起路','秋涛路','环城东路','建国路',
+// '中河路','中山路','延安路','环城西路','莫干山路',
+// '古翠路','古墩路','文一路','文二路','文三路',
+// '之江路','庆春路','体育场路','环城北路','良睦路'];
+category = ['上城区','下城区','江干区','拱墅区','西湖区',
+'滨江区','萧山区','余杭区','富阳区',];
+// barData = [100,400];
+// lineData = [200,900];
+// option
+averageOption = {
+    backgroundColor: '#12203a',
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: ['line', 'bar'],
+        textStyle: {
+            color: '#ccc'
+        }
+    },
+    xAxis: {
+        data: category,
+        axisLine: {
+            lineStyle: {
+                color: '#ccc'
+            }
+        }
+    },
+    yAxis: {
+        splitLine: {show: false},
+        axisLine: {
+            lineStyle: {
+                color: '#ccc'
+            }
+        }
+    },
+    series: [{
+        name: '预测',
+        type: 'line',
+        smooth: true,
+        showAllSymbol: true,
+        symbol: 'emptyCircle',
+        symbolSize: 15,
+        data: lineData
+    }, {
+        name: '实际',
+        type: 'bar',
+        barWidth: 10,
+        itemStyle: {
+            normal: {
+                barBorderRadius: 5,
+                color: new echarts.graphic.LinearGradient(
+                    0, 0, 0, 1,
+                    [
+                        {offset: 0, color: '#14c8d4'},
+                        {offset: 1, color: '#43eec6'}
+                    ]
+                )
+            }
+        },
+        data: barData
+    }]
+};;
+if (averageOption && typeof averageOption === "object") {
+    averageChart.setOption(averageOption, true);
+}
+averageChart.on('click', function (params) {
+	radarOption.radar.indicator =
+	[
+		{ name: '天气', max: 100},
+		{ name: '温度', max: 40},
+		{ name: '湿度', max: 100},
+		{ name: '能见度', max: 100},
+		{ name: '风力', max: 10},
+		{ name: '拥堵指数', max: 100}
+    ];
+    radarOption.series[0].data =
+	[
+		{
+            value : [80, 36, 95, 80, 2, 10],
+            name : '预测情况    '
+        },
+         {
+            value : [80, 36, 90, 85, 3, 5],
+            name : '实际情况'
+        }
+    ];
+    // for(var i = 0 ;i<2;i++){
+    // 	for(var j = 0;j<6;j++){
+    // 		radarOption.series[0].data[i].value[j] = 
+    // 		radarOption.radar.indicator[j].max*Math.random();
+    // 	}
+    // }
+    for(var i = 0;i<6;i++){
+		radarOption.series[0].data[0].value[i] = parseInt(
+		radarOption.radar.indicator[i].max*0.1+
+		radarOption.radar.indicator[i].max*Math.random()*0.8);
+
+		if(Math.random()>=0.5){
+			radarOption.series[0].data[1].value[i] = parseInt(
+			radarOption.series[0].data[0].value[i]+
+			radarOption.radar.indicator[i].max*Math.random()*0.1);
+		}
+		else{
+			radarOption.series[0].data[1].value[i] = parseInt(
+			radarOption.series[0].data[0].value[i]-
+			radarOption.radar.indicator[i].max*Math.random()*0.1);
+		}
+	}
+    if (radarOption && typeof radarOption === "object") {
+	    radarChart.setOption(radarOption, true);
+	}
+	for(var i =0 ;i<6;i++){
+		mainContain.$data.radarInfoData[i].itemName=radarOption.radar.indicator[i].name;
+		mainContain.$data.radarInfoData[i].itemInfo=parseInt(radarOption.series[0].data[1].value[i]);
+	}
+	//天气
+	if(mainContain.$data.radarInfoData[0].itemInfo>=0&&mainContain.$data.radarInfoData[0].itemInfo<=33){
+		mainContain.$data.radarInfoData[0].itemImage = 'images/redPoint.png';
+	}
+	else if(mainContain.$data.radarInfoData[0].itemInfo>33&&mainContain.$data.radarInfoData[0].itemInfo<=66){
+		mainContain.$data.radarInfoData[0].itemImage = 'images/yellowPoint.png';
+	}
+	else {
+		mainContain.$data.radarInfoData[0].itemImage = 'images/greenPoint.png';
+	}
+	//温度
+	if(mainContain.$data.radarInfoData[1].itemInfo>=0&&mainContain.$data.radarInfoData[1].itemInfo<=12){
+		mainContain.$data.radarInfoData[1].itemImage = 'images/yellowPoint.png';
+	}
+	else if(mainContain.$data.radarInfoData[1].itemInfo>12&&mainContain.$data.radarInfoData[1].itemInfo<=24){
+		mainContain.$data.radarInfoData[1].itemImage = 'images/greenPoint.png';
+	}
+	else {
+		mainContain.$data.radarInfoData[1].itemImage = 'images/redPoint.png';
+	}
+	//湿度
+	if(mainContain.$data.radarInfoData[2].itemInfo>=0&&mainContain.$data.radarInfoData[2].itemInfo<=33){
+		mainContain.$data.radarInfoData[2].itemImage = 'images/yellowPoint.png';
+	}
+	else if(mainContain.$data.radarInfoData[2].itemInfo>33&&mainContain.$data.radarInfoData[2].itemInfo<=66){
+		mainContain.$data.radarInfoData[2].itemImage = 'images/greenPoint.png';
+	}
+	else {
+		mainContain.$data.radarInfoData[2].itemImage = 'images/yellowPoint.png';
+	}
+	//能见度
+	if(mainContain.$data.radarInfoData[3].itemInfo>=0&&mainContain.$data.radarInfoData[3].itemInfo<=33){
+		mainContain.$data.radarInfoData[3].itemImage = 'images/redPoint.png';
+	}
+	else if(mainContain.$data.radarInfoData[3].itemInfo>33&&mainContain.$data.radarInfoData[3].itemInfo<=66){
+		mainContain.$data.radarInfoData[3].itemImage = 'images/yellowPoint.png';
+	}
+	else {
+		mainContain.$data.radarInfoData[3].itemImage = 'images/greenPoint.png';
+	}
+	//风力
+	if(mainContain.$data.radarInfoData[4].itemInfo>=0&&mainContain.$data.radarInfoData[4].itemInfo<=5){
+		mainContain.$data.radarInfoData[4].itemImage = 'images/greenPoint.png';
+	}
+	else if(mainContain.$data.radarInfoData[4].itemInfo>5&&mainContain.$data.radarInfoData[4].itemInfo<=7){
+		mainContain.$data.radarInfoData[4].itemImage = 'images/yellowPoint.png';
+	}
+	else {
+		mainContain.$data.radarInfoData[4].itemImage = 'images/redPoint.png';
+	}
+	//拥堵指数
+	if(mainContain.$data.radarInfoData[5].itemInfo>=0&&mainContain.$data.radarInfoData[5].itemInfo<=33){
+		mainContain.$data.radarInfoData[5].itemImage = 'images/greenPoint.png';
+	}
+	else if(mainContain.$data.radarInfoData[5].itemInfo>33&&mainContain.$data.radarInfoData[5].itemInfo<=66){
+		mainContain.$data.radarInfoData[5].itemImage = 'images/yellowPoint.png';
+	}
+	else {
+		mainContain.$data.radarInfoData[5].itemImage = 'images/redPoint.png';
+	}
+	$('.radarInfo>span').text(params.name+"实际情况");
+});
+       </script>
+
+</html>

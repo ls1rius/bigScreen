@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <style type="text/css">
+       canvas{
+        background-color: #12203a!important;
+       }
+   </style>
+   <body style="height: 100%; margin: 0; background-color: #12203a;" >
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="echarts.js"></script>
+       <script type="text/javascript" src="theme.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom,'shine');
+var app = {};
+option = null;
+// Generate data
+var category = [];
+var dottedBase = +new Date();
+var lineData = [];
+var barData = [];
+
+for (var i = 0; i < 20; i++) {
+    var date = new Date(dottedBase += 3600 * 24 * 1000);
+    category.push([
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate()
+    ].join('-'));
+    var b = Math.random()*10;
+    var d = Math.random()*0.05*10;
+    barData.push(b)
+    lineData.push(d + b);
+}
+category = ['余杭塘路','凤起路','秋涛路','环城东路','建国路',
+'中河路','中山路','延安路','环城西路','莫干山路',
+'古翠路','古墩路','文一路','文二路','文三路',
+'之江路','庆春路','体育场路','环城北路','良睦路'];
+// barData = [100,400];
+// lineData = [200,900];
+// option
+option = {
+    backgroundColor: '#12203a',
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: ['line', 'bar'],
+        textStyle: {
+            color: '#ccc'
+        }
+    },
+    xAxis: {
+        data: category,
+        axisLine: {
+            lineStyle: {
+                color: '#ccc'
+            }
+        }
+    },
+    yAxis: {
+        splitLine: {show: false},
+        axisLine: {
+            lineStyle: {
+                color: '#ccc'
+            }
+        }
+    },
+    series: [{
+        name: '预测',
+        type: 'line',
+        smooth: true,
+        showAllSymbol: true,
+        symbol: 'emptyCircle',
+        symbolSize: 15,
+        data: lineData
+    }, {
+        name: '实际',
+        type: 'bar',
+        barWidth: 10,
+        itemStyle: {
+            normal: {
+                barBorderRadius: 5,
+                color: new echarts.graphic.LinearGradient(
+                    0, 0, 0, 1,
+                    [
+                        {offset: 0, color: '#14c8d4'},
+                        {offset: 1, color: '#43eec6'}
+                    ]
+                )
+            }
+        },
+        data: barData
+    }]
+};;
+// , {
+//         name: 'line',
+//         type: 'bar',
+//         barGap: '-100%',
+//         barWidth: 10,
+//         itemStyle: {
+//             normal: {
+//                 color: new echarts.graphic.LinearGradient(
+//                     0, 0, 0, 1,
+//                     [
+//                         {offset: 0, color: 'rgba(20,200,212,0.5)'},
+//                         {offset: 0.2, color: 'rgba(20,200,212,0.2)'},
+//                         {offset: 1, color: 'rgba(20,200,212,0)'}
+//                     ]
+//                 )
+//             }
+//         },
+//         z: -12,
+//         data: lineData
+//     }, {
+//         name: 'dotted',
+//         type: 'pictorialBar',
+//         symbol: 'rect',
+//         itemStyle: {
+//             normal: {
+//                 color: '#0f375f'
+//             }
+//         },
+//         symbolRepeat: true,
+//         symbolSize: [12, 4],
+//         symbolMargin: 1,
+//         z: -10,
+//         data: lineData
+//     }
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+myChart.on('click', function (params) {
+    // if (params.componentType === 'markPoint') {
+    //     // 点击到了 markPoint 上
+    //     if (params.seriesIndex === 5) {
+    //         // 点击到了 index 为 5 的 series 的 markPoint 上。
+    //     }
+    // }
+    // else if (params.componentType === 'series') {
+    //     if (params.seriesType === 'graph') {
+    //         if (params.dataType === 'edge') {
+    //             // 点击到了 graph 的 edge（边）上。
+    //         }
+    //         else {
+    //             // 点击到了 graph 的 node（节点）上。
+    //         }
+    //     }
+    // }
+    var div = window.parent.document.getElementById('u137');
+    div.children[0].src = "outlink/radar_third.html";
+});
+       </script>
+   </body>
+</html>

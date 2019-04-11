@@ -1,0 +1,747 @@
+html, body {
+	margin: 0;
+}
+div {
+	box-sizing: border-box;
+}
+.space {
+	width: 100%;
+	height: 2%;
+}
+#mainContain {
+	width: 2400px;
+	height: 900px;
+	background-color: #12213a;
+	margin: auto;
+	border: 1px solid #ffffff;
+	padding: 20px;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+}
+/*leftPart*/
+#mainContain .leftPart {
+	width: 24.25%;
+	height: 100%;
+	/*background-color: red;*/
+}
+.weatherBox {
+	width: 100%;
+	height: 15%;
+	/*padding: 20px 0 20px 0;*/
+	display: flex;
+	flex-wrap: nowrap;
+}
+.dayTimeBox {
+	width: 60%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.weatherShowBox {
+	width: 40%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.distinctBox {
+	width: 100%;
+	height: 10%;
+	/*margin-bottom: 2%;*/
+	padding: 0 10px 0 10px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-content: space-between;
+}
+.dayInfo {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	padding: 0 30px 0 30px;
+}
+.dayInfo span {
+	color: #fff;
+	font-size: 20px;
+}
+.curTime {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #FFE43F;
+	font-size: 60px;
+	text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.647058823529412);
+}
+.weatherShowBox .imageContain {
+	width: 100%;
+	height: 70%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.weatherShowBox .imageContain img {
+	width: 100px;
+	height: 100px;
+}
+.weatherShowBox span {
+	color: #fff;
+	font-size: 20px;
+}
+
+.distinctItemBox {
+	width: 19%;
+	height: 46%;
+	box-sizing:border-box;
+	border: 1px solid #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #000;
+	font-size: 20px;
+	background-color: #FFB86C;
+	font-weight: bold;
+	cursor: pointer;
+}
+.accidentRankBox {
+	width: 100%;
+	height: 39%;
+	/*margin-top: 5%;*/
+	/*margin-bottom: 2%;*/
+	display: flex;
+	position: relative;
+}
+/*.gradientBorder {
+	justify-content: center;
+	align-items: center;
+	background:radial-gradient(ellipse farthest-corner,#ffffff,#0778C7);
+}
+.gradientBorderInside {
+	width: 99.5%;
+	height: 99%;
+	background-color: #12213a;
+	box-sizing: border-box;
+}*/
+.gradientBorder {
+	position: relative;
+	border: 2px solid;
+	border-image: radial-gradient( #ffffff, #0778C7) 30 30;
+}
+.gradientBorder .metalBorderBox {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+.gradientBorder .metalBorderBox .insideBox{
+	width: 100%;
+	height: 50%;
+	display: flex;
+	justify-content: space-between;
+	align-content: space-between;
+}
+.gradientBorder .metalBorderBox .insideBox div {
+	width: 30px;
+	height: 15px;
+	margin: -3px;
+
+}
+.gradientBorder .metalBorderBox .insideBox .left {
+	border-top: 6px solid #fff;
+	border-left: 6px solid #fff;
+	box-shadow: -1px -1px 0px lightgrey;
+}
+.gradientBorder .metalBorderBox .insideBox .right {
+	border-top: 6px solid #fff;
+	border-right: 6px solid #fff;
+	box-shadow: 1px -1px 0px lightgrey;
+}
+.gradientBorder .metalBorderBox .insideBox:last-child {
+	transform:rotate(180deg);
+}
+.gradientBorder .metalBorderBox .insideBox span{
+	font-size: 24px;
+	color: #03F2F1;
+	text-shadow: 1px 1px 1px rgba(255, 255, 204, 0.647058823529412);
+	background-color: #12213a;
+	margin-top: -13px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.rateAnalyse {
+	width: 100%;
+	height: 32%;
+	position: relative;
+}
+.outSideContain {
+	width: 100%;
+	height: 100%;
+	padding: 20px 10px;
+	/*background: red;*/
+	position: absolute;
+	display: flex;
+}
+.accidentRankBox .outSideContain {
+	flex-wrap: wrap;
+}
+.curDistincts {
+	width: 100%;
+	height: 15%;
+	display: flex;
+	justify-content: center;
+}
+.curDistincts span {
+	display: flex;
+	align-items: center;
+	font-size: 20px;
+	color: #fff;
+	max-width: calc(100%)!important;
+	height: calc(100% - 6px)!important;
+	word-break:keep-all;           /* 不换行 */
+	white-space:nowrap; 
+  	overflow-y: hidden!important;
+	overflow-x: scroll!important; 
+}
+.curDistincts span::-webkit-scrollbar {
+	height: 6px!important;
+	width: 6px!important;
+}
+.accidentRankContain{
+	width: 100%;
+	height: 85%;
+	overflow: auto;
+
+}
+.accidentItemBox:first-child{
+	margin: 0;
+}
+
+.accidentItemBox {
+	cursor: pointer;
+	width: 100%;
+	height: 50px;
+	margin-top: 5px;
+	padding-left: 30px;
+	padding-right: 30px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	align-content: center;
+	border-bottom: 2px solid;
+	border-image: radial-gradient( #ffffff, #0778C7) 30 30;
+}
+.accidentItemBox .rankOrder {
+	width: 35px;
+	height: 35px;
+	background-color: transparent;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	font-weight: bold;
+	color: #fff;
+	font-size: 20px;
+	border: 1px solid #0778C7; 
+}
+.accidentItemBox:nth-child(1) .rankOrder{
+	background-color: #FF0000;
+}
+.accidentItemBox:nth-child(2) .rankOrder{
+	background-color: #FFB86C;
+}
+.accidentItemBox:nth-child(3) .rankOrder{
+	background-color: #36A9CE;
+}
+
+.accidentItemBox .tri{
+	width: 0px;
+	height: 0px;
+	position: relative;
+	margin-left: -37px;
+	margin-top: 21px;
+	background-color: transparent;
+	border-left: 8px solid #0778C7;
+	border-bottom: 8px solid #0778C7;
+	border-right: 8px solid transparent;
+	border-top: 8px solid transparent;
+}
+.accidentItemBox .tri div{
+	width: 0px;
+	height: 0px;
+	position: relative;
+	margin-left: -8px;
+	margin-top: -6px;
+	background-color: transparent;
+	border-left: 8px solid #12213a;
+	border-bottom: 8px solid #12213a;
+	border-right: 8px solid transparent;
+	border-top: 8px solid transparent;
+}
+.accidentItemBox>span{
+	height: 35px;
+	display: flex;
+	align-items: center;
+	color: #fff;
+	font-size: 16px;
+}
+.accidentItemBox .name {
+	width: 16%;
+}
+.accidentItemBox .carId{
+	width: 23%;
+}
+.accidentItemBox .rate{
+	width: 21%
+}
+.accidentItemBox .curRoad {
+	width: 25%;
+}
+.rateAnalyseContain {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-self: center;
+	align-content: center;
+	/*background-color: red;*/
+}
+#gauge_speed,
+#gauge_probability {
+	width: 50%;
+	height: 100%;
+}
+.rateAnalyseItem {
+	width: 50%;
+	height: 100%;
+}
+.rateAnalyseBottomBox {
+	width: 100%;
+	height: 30%;
+	position: absolute;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.rateAnalyseBottomBox>div{
+	width: 50%;
+	height: 100%;
+	padding-left: 20px;
+	padding-right: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.rateAnalyseBottomBox>div>div{
+	width: 100%;
+	height: 50%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.rateAnalyseBottomBox>div>div>span {
+	display: flex;
+	align-items: center;
+	width: 50%;
+}
+.rateAnalyseBottomBox>div>div>span img{
+	width: 25px;
+	height: 25px;
+}
+.rateAnalyseBottomBox>div>div>span>p,
+.rateAnalyseBottomBox>div>div>p {
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	color: #fff;
+}
+.rateAnalyseBottomBox>div>div>p {
+	display: block;
+}
+
+/*centerPart*/
+.centerPart {
+	width: 50%;
+	height: 100%;
+}
+.routeTraceScreen {
+	width: 100%;
+	height: 66%;
+	position: relative;
+}
+.accidentRecords {
+	width: 100%;
+	height: 32%;
+	position: relative;
+}
+
+.radarBox,
+.recordsShowBox {
+	width: 50%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.recordsShowBox table tbody span {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.radarInfo {
+	width: 30%;
+	height: 100%;
+	padding: 10px 0 10px 30px;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+}
+.radarInfoItem {
+	width: 100%;
+	height: 30px;
+	/*background: red;*/
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: space-between;
+}
+.radarInfoItem span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.radarInfoItem img {
+	width: 25px;
+	height: 25px;
+}
+
+.radarInfoItem p {
+	padding: 0;
+	margin: 0;
+	color: #fff;
+	font-size: 16px;
+}
+.radarContain {
+	width: 70%;
+	height: 100%;
+/*	width: 800px;
+	height: 800px;*/
+}
+.recordsShowBox table {
+	color: #fff;
+	font-size: 16px;
+	box-sizing: border-box;
+}
+.recordsShowBox table,
+.recordsShowBox table th,
+.recordsShowBox table td  {
+	border: 2px solid;
+	border-image: radial-gradient( #ffffff, #0778C7) 3 3;
+}
+.searchRecordsBox {
+	width: 100%;
+	height: 15%;
+	/*background-color: red;*/
+	display: flex;
+}
+.recordsShowBox table  {
+	text-align:center;
+	width: 100%;
+	height: 85%;
+}
+.recordsShowBox table thead {
+	height: 15%;
+	width: calc( 100% - 5px )!important;
+}
+.recordsShowBox table tbody {
+	display:block;
+	height:85%;
+	overflow-y:scroll;
+}
+.recordsShowBox table thead, 
+.recordsShowBox tbody tr {
+	display:table;
+	width:100%;
+	table-layout:fixed;
+}
+
+.searchContain {
+	width: 40%;
+	height: 100%;
+	/*background-color: yellow;*/
+	display: flex;
+	align-items:center;
+	padding-bottom: 5px;
+	justify-content: center;
+}
+.searchContain input {
+	width: 100%;
+	height: 65%;
+	padding-left:10px;
+	outline: none;
+	border-radius: 3px;
+}
+.searchContain span {
+	width: 30px;
+	height: 20px;
+	position: relative;
+	margin-left: -30px;
+}
+.searchContain span img {
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+
+/*.centerLogoPart{
+	font-size: 48px;
+	color: #fff;
+	text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.647058823529412);
+	background-color: #12213a;
+	width: 800px!important;
+	height: 90px!important;
+	z-index: 11111111111;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	margin: 0!important;
+	margin-top: -20px!important;
+	top: 0;
+	background-color: red;
+	background: linear-gradient(to bottom,#000000,#3399CC);
+	opacity: 0.8;
+	box-shadow: -3px 0px 6px #fff,
+	3px 0px 6px #fff,
+	0px 3px 6px #fff;
+}*/
+.centerLogoPart {
+	width: 800px!important;
+	height: 90px!important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	font-size: 48px;
+	color: #fff;
+	margin: 0!important;
+	margin-top: -20px!important;
+	z-index: 11111111;
+}
+.centerLogoPart span {
+	font-size: 48px!important;
+	color: #fff!important;
+	text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.647058823529412);
+	width: 800px!important;
+	height: 90px!important;
+	z-index: 11111111111;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	background-color: transparent!important;
+	margin: 0!important;
+	padding: 0!important;
+}
+.centerLogoPart img {
+	width: 800px;
+	height: 90px;
+	display: block;
+
+}
+
+#centerMapBox {
+	width: 100%;
+	height: 100%;
+}
+
+#centerMapBox .BMap_cpyCtrl {
+    display: none;
+}
+
+#centerMapBox .anchorBL {
+    display: none;
+}
+/*#changeTrafficAndAccident {
+	width: calc(100% - 20px);
+	height:  calc(100% - 40px);
+	position: absolute;
+}*/
+#changeTrafficAndAccident{
+	/*width: 180px;*/
+	/*height: 50px;*/
+	/*background-color: red;*/
+	position: absolute; 
+	z-index: 10; 
+	text-size-adjust: none; 
+	top: auto; 
+	left: 20px; 
+	bottom: 30px; 
+	right: auto;
+	display: flex;
+	justify-content: center;
+	align-items: all;
+	flex-wrap: nowrap;
+}
+#changeTrafficAndAccident span{
+	/*width: 50%;*/
+	/*height: 100%;*/
+	padding: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.accidentBtn{
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	background-color: #90a5d8;
+	color: #fff;
+}
+.trafficBtn{
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	color: #000;
+	background-color: #fff;
+}
+#changeTheDayAndNight {
+	position: absolute; 
+	z-index: 10; 
+	text-size-adjust: none; 
+	top: auto; 
+	left: 20px; 
+	bottom: 80px; 
+	right: auto;
+	display: flex;
+	justify-content: center;
+	align-items: all;
+	flex-wrap: nowrap;
+}
+#changeTheDayAndNight span{
+	/*width: 50%;*/
+	/*height: 100%;*/
+	padding: 5px 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	color: #fff;
+	background-color: #90a5d8;
+	border-radius: 5px;
+}
+/*.redPoint {
+	width: 30px;
+	height: 30px;
+	position: absolute; 
+	z-index: 10; 
+	text-size-adjust: none; 
+	top: auto; 
+	left: 800px; 
+	bottom: 80px; 
+	right: auto;
+	display: flex;
+	justify-content: center;
+	align-items: all;
+	flex-wrap: nowrap;
+	background-color: red;
+	border-radius: 50%;
+	transition: 1s;
+	transform:scale(1.5,1.5);
+}*/
+/*rightPart*/
+.rightPart{
+	width: 24.25%;
+	height: 100%;
+}
+.averageRate,
+.tfhoursAlarm,
+.rateTends {
+	width: 100%;
+	height: 32%;
+	position: relative;
+}
+.tfhoursAlarm {
+	display: flex;
+	justify-content: center;
+	flex-wrap: nowrap;
+}
+.tfhoursAlarmContain {
+	width: 60%;
+	height: 100%;
+}
+.tfhoursAlarmWordsShow {
+	width: 40%;
+	height: 100%;
+}
+.tfhoursAlarmWordsShow .marqueeForWords {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+.tfhoursAlarmWordsShow .marqueeForWords span {
+	font-size: 16px;
+	color: #fff;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	word-break : break-all;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+.tfhoursAlarmWordsShow .marqueeForWords span b {
+	margin-right: 10px;
+}
+.tfhoursAlarmWordsShow .marqueeForWords span u {
+	color: red;
+}
+#multipleX,
+#pieGraph,
+#averageGraph {
+	width: 100%;
+	height: 100%;
+}
+/*else*/
+.beauty-scroll {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.beauty-scroll::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: transparent;
+}
+.beauty-scroll::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: radial-gradient(#ffffff, #12213a);
+}
+.beauty-scroll::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+/*DrawingManager_min*/
+.clearAllMarkers {
+	width: 64px;
+	height: 100%;
+	float: left;
+	cursor: pointer;
+	border: 0!important;
+	border-left: 1px solid #d2d2d2!important;
+	background-image:none!important; 
+	background-color: #fff;
+	font-size: 16px;
+	text-decoration: none;
+	color: #346fa7;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+

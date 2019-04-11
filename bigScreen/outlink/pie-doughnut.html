@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html style="height: 100%;background-color: #12203a;">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="echarts.js"></script>
+       <!-- 增添样式js的路径 -->
+       <script type="text/javascript" src="theme.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+//加载样式
+var myChart = echarts.init(dom,'shine');
+var app = {};
+option = null;
+app.title = '环形图';
+
+option = {
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        x: 'left',
+        data:['危险','一般','安全']
+    },
+    series: [
+        {
+            name:'访问来源',
+            type:'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '20',
+                        fontWeight: 'bold',
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data:[
+                {value:90, name:'危险'},
+                {value:150, name:'一般'},
+                {value:270, name:'安全'}
+            ]
+        }
+    ]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
